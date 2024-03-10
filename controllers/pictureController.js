@@ -18,7 +18,23 @@ export const create = async (req, res) => {
   }
 };
 
-export const findPicture = async (req, res) => {
-  const picture = await Picture.find({});
-  return res.json(picture);
+export const findAll = async (req, res) => {
+  try {
+    const pictures = await Picture.find();
+    res.json(pictures);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar imagens." });
+  }
+};
+
+export const remove = async () => {
+  try {
+    const picture = await Picture.findById(req.params.id);
+
+    if (!picture) {
+      return res.status(404).json({ message: "Imagem não encontrada" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar imagens." });
+  }
 };
